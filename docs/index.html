@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coauthorship Trends in Economics | NBER Working Papers</title>
+    <meta name="description" content="Tracking the average number of coauthors on NBER economics working papers over time">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-500);
+            font-weight: 400;
+        }
+
+        .key-stat {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .key-stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .key-stat-detail {
+            font-size: 0.875rem;
+            opacity: 0.75;
+            margin-top: 0.75rem;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-card-label {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        .data-table-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.875rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--gray-900);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--gray-50);
+        }
+
+        .trend-up {
+            color: #059669;
+        }
+
+        .trend-down {
+            color: #dc2626;
+        }
+
+        .methodology {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .methodology p {
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+
+        .methodology p:last-child {
+            margin-bottom: 0;
+        }
+
+        .methodology a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .methodology a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .key-stat-number {
+                font-size: 2.5rem;
+            }
+
+            .chart-container {
+                height: 280px;
+            }
+
+            th, td {
+                padding: 0.625rem 0.5rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Coauthorship Trends in Economics</h1>
+            <p class="subtitle">Average number of authors per NBER working paper, 2015-2021</p>
+        </header>
+
+        <div class="key-stat">
+            <div class="key-stat-number">+15%</div>
+            <div class="key-stat-label">Increase in average coauthors since 2015</div>
+            <div class="key-stat-detail">From 2.67 to 3.06 authors per paper</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-value">8,804</div>
+                <div class="stat-card-label">Papers analyzed (2015-2021)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-value">24,994</div>
+                <div class="stat-card-label">Total author appearances</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-value">2.84</div>
+                <div class="stat-card-label">Average authors per paper</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="section-title">Average Coauthors Per Paper Over Time</h2>
+            <div class="chart-container">
+                <canvas id="coauthorChart"></canvas>
+            </div>
+        </div>
+
+        <div class="data-table-section">
+            <h2 class="section-title">Yearly Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Avg. Authors</th>
+                        <th>Papers</th>
+                        <th>Total Authors</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2015</td>
+                        <td>2.67</td>
+                        <td>1,020</td>
+                        <td>2,723</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2016</td>
+                        <td>2.61</td>
+                        <td>1,175</td>
+                        <td>3,067</td>
+                        <td class="trend-down">-2.2%</td>
+                    </tr>
+                    <tr>
+                        <td>2017</td>
+                        <td>2.74</td>
+                        <td>1,164</td>
+                        <td>3,191</td>
+                        <td class="trend-up">+5.0%</td>
+                    </tr>
+                    <tr>
+                        <td>2018</td>
+                        <td>2.76</td>
+                        <td>1,236</td>
+                        <td>3,406</td>
+                        <td class="trend-up">+0.5%</td>
+                    </tr>
+                    <tr>
+                        <td>2019</td>
+                        <td>2.87</td>
+                        <td>1,185</td>
+                        <td>3,401</td>
+                        <td class="trend-up">+4.1%</td>
+                    </tr>
+                    <tr>
+                        <td>2020</td>
+                        <td>3.03</td>
+                        <td>1,713</td>
+                        <td>5,196</td>
+                        <td class="trend-up">+5.7%</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>3.06</td>
+                        <td>1,311</td>
+                        <td>4,010</td>
+                        <td class="trend-up">+0.9%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="methodology">
+            <h2 class="section-title">About This Data</h2>
+            <p>
+                This analysis examines authorship patterns in NBER (National Bureau of Economic Research) working papers
+                from 2015 to 2021. The data shows a clear trend toward increased collaboration in economics research,
+                with the average number of authors per paper rising from 2.67 in 2015 to 3.06 in 2021.
+            </p>
+            <p>
+                Notable observations include the significant jump in 2020, which saw both more papers published
+                (1,713 vs. typical ~1,200) and higher collaboration rates. This may reflect increased research
+                activity related to the COVID-19 pandemic, which often required interdisciplinary collaboration.
+            </p>
+            <p>
+                <strong>Data source:</strong> Paper metadata from the
+                <a href="https://github.com/bldavies/nberwp" target="_blank">nberwp R package</a>,
+                which compiles and cleans official NBER metadata. The underlying data is published by the
+                <a href="https://www.nber.org/research/data/nber-working-papers-and-chapters-metadata" target="_blank">National Bureau of Economic Research</a>.
+            </p>
+        </div>
+
+        <footer>
+            <p>
+                Data analysis and visualization by
+                <a href="https://github.com/thoulden/Coauthor" target="_blank">Coauthor Project</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        const data = {
+            "2015": { "average_coauthors": 2.67, "paper_count": 1020, "total_authors": 2723 },
+            "2016": { "average_coauthors": 2.61, "paper_count": 1175, "total_authors": 3067 },
+            "2017": { "average_coauthors": 2.741, "paper_count": 1164, "total_authors": 3191 },
+            "2018": { "average_coauthors": 2.756, "paper_count": 1236, "total_authors": 3406 },
+            "2019": { "average_coauthors": 2.87, "paper_count": 1185, "total_authors": 3401 },
+            "2020": { "average_coauthors": 3.033, "paper_count": 1713, "total_authors": 5196 },
+            "2021": { "average_coauthors": 3.059, "paper_count": 1311, "total_authors": 4010 }
+        };
+
+        const years = Object.keys(data);
+        const avgCoauthors = years.map(y => data[y].average_coauthors);
+
+        const ctx = document.getElementById('coauthorChart').getContext('2d');
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.3)');
+        gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Average Authors per Paper',
+                    data: avgCoauthors,
+                    borderColor: '#2563eb',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#2563eb',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 8,
+                    pointHoverBackgroundColor: '#2563eb',
+                    pointHoverBorderColor: '#ffffff',
+                    pointHoverBorderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#111827',
+                        titleFont: {
+                            size: 14,
+                            weight: '600'
+                        },
+                        bodyFont: {
+                            size: 13
+                        },
+                        padding: 12,
+                        cornerRadius: 8,
+                        displayColors: false,
+                        callbacks: {
+                            title: function(context) {
+                                return context[0].label;
+                            },
+                            label: function(context) {
+                                const year = context.label;
+                                const yearData = data[year];
+                                return [
+                                    `Average: ${context.parsed.y.toFixed(2)} authors`,
+                                    `Papers: ${yearData.paper_count.toLocaleString()}`,
+                                    `Total authors: ${yearData.total_authors.toLocaleString()}`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 13,
+                                weight: '500'
+                            },
+                            color: '#6b7280'
+                        }
+                    },
+                    y: {
+                        min: 2.4,
+                        max: 3.2,
+                        grid: {
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            font: {
+                                size: 13
+                            },
+                            color: '#6b7280',
+                            callback: function(value) {
+                                return value.toFixed(1);
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

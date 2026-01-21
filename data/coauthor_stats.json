@@ -1,0 +1,37 @@
+{
+  "2015": {
+    "average_coauthors": 2.67,
+    "paper_count": 1020,
+    "total_authors": 2723
+  },
+  "2016": {
+    "average_coauthors": 2.61,
+    "paper_count": 1175,
+    "total_authors": 3067
+  },
+  "2017": {
+    "average_coauthors": 2.741,
+    "paper_count": 1164,
+    "total_authors": 3191
+  },
+  "2018": {
+    "average_coauthors": 2.756,
+    "paper_count": 1236,
+    "total_authors": 3406
+  },
+  "2019": {
+    "average_coauthors": 2.87,
+    "paper_count": 1185,
+    "total_authors": 3401
+  },
+  "2020": {
+    "average_coauthors": 3.033,
+    "paper_count": 1713,
+    "total_authors": 5196
+  },
+  "2021": {
+    "average_coauthors": 3.059,
+    "paper_count": 1311,
+    "total_authors": 4010
+  }
+}
