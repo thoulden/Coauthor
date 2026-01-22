@@ -108,7 +108,7 @@
 
         .chart-container {
             position: relative;
-            height: 350px;
+            height: 400px;
         }
 
         .stats-grid {
@@ -152,7 +152,7 @@
         }
 
         th, td {
-            padding: 0.875rem 1rem;
+            padding: 0.75rem 1rem;
             text-align: left;
             border-bottom: 1px solid var(--gray-200);
         }
@@ -237,12 +237,12 @@
             }
 
             .chart-container {
-                height: 280px;
+                height: 300px;
             }
 
             th, td {
-                padding: 0.625rem 0.5rem;
-                font-size: 0.875rem;
+                padding: 0.5rem 0.4rem;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -251,26 +251,26 @@
     <div class="container">
         <header>
             <h1>Coauthorship Trends in Economics</h1>
-            <p class="subtitle">Average number of authors per NBER working paper, 2015-2021</p>
+            <p class="subtitle">Average number of authors per NBER working paper, 2005-2025</p>
         </header>
 
         <div class="key-stat">
-            <div class="key-stat-number">+15%</div>
-            <div class="key-stat-label">Increase in average coauthors since 2015</div>
-            <div class="key-stat-detail">From 2.67 to 3.06 authors per paper</div>
+            <div class="key-stat-number">+51%</div>
+            <div class="key-stat-label">Increase in average coauthors since 2005</div>
+            <div class="key-stat-detail">From 2.13 to 3.22 authors per paper</div>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-card-value">8,804</div>
-                <div class="stat-card-label">Papers analyzed (2015-2021)</div>
+                <div class="stat-card-value">23,528</div>
+                <div class="stat-card-label">Papers analyzed (2005-2025)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-value">24,994</div>
+                <div class="stat-card-value">63,676</div>
                 <div class="stat-card-label">Total author appearances</div>
             </div>
             <div class="stat-card">
-                <div class="stat-card-value">2.84</div>
+                <div class="stat-card-value">2.71</div>
                 <div class="stat-card-label">Average authors per paper</div>
             </div>
         </div>
@@ -296,53 +296,151 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>2005</td>
+                        <td>2.13</td>
+                        <td>891</td>
+                        <td>1,902</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2006</td>
+                        <td>2.16</td>
+                        <td>904</td>
+                        <td>1,955</td>
+                        <td class="trend-up">+1.3%</td>
+                    </tr>
+                    <tr>
+                        <td>2007</td>
+                        <td>2.23</td>
+                        <td>904</td>
+                        <td>2,016</td>
+                        <td class="trend-up">+3.1%</td>
+                    </tr>
+                    <tr>
+                        <td>2008</td>
+                        <td>2.29</td>
+                        <td>912</td>
+                        <td>2,090</td>
+                        <td class="trend-up">+2.8%</td>
+                    </tr>
+                    <tr>
+                        <td>2009</td>
+                        <td>2.33</td>
+                        <td>1,000</td>
+                        <td>2,334</td>
+                        <td class="trend-up">+1.8%</td>
+                    </tr>
+                    <tr>
+                        <td>2010</td>
+                        <td>2.35</td>
+                        <td>1,025</td>
+                        <td>2,404</td>
+                        <td class="trend-up">+0.5%</td>
+                    </tr>
+                    <tr>
+                        <td>2011</td>
+                        <td>2.44</td>
+                        <td>1,065</td>
+                        <td>2,595</td>
+                        <td class="trend-up">+3.9%</td>
+                    </tr>
+                    <tr>
+                        <td>2012</td>
+                        <td>2.48</td>
+                        <td>945</td>
+                        <td>2,342</td>
+                        <td class="trend-up">+1.7%</td>
+                    </tr>
+                    <tr>
+                        <td>2013</td>
+                        <td>2.50</td>
+                        <td>1,110</td>
+                        <td>2,779</td>
+                        <td class="trend-up">+1.0%</td>
+                    </tr>
+                    <tr>
+                        <td>2014</td>
+                        <td>2.53</td>
+                        <td>1,045</td>
+                        <td>2,642</td>
+                        <td class="trend-up">+1.0%</td>
+                    </tr>
+                    <tr>
                         <td>2015</td>
                         <td>2.67</td>
                         <td>1,020</td>
-                        <td>2,723</td>
-                        <td>-</td>
+                        <td>2,725</td>
+                        <td class="trend-up">+5.7%</td>
                     </tr>
                     <tr>
                         <td>2016</td>
                         <td>2.61</td>
                         <td>1,175</td>
-                        <td>3,067</td>
+                        <td>3,071</td>
                         <td class="trend-down">-2.2%</td>
                     </tr>
                     <tr>
                         <td>2017</td>
                         <td>2.74</td>
                         <td>1,164</td>
-                        <td>3,191</td>
-                        <td class="trend-up">+5.0%</td>
+                        <td>3,193</td>
+                        <td class="trend-up">+4.9%</td>
                     </tr>
                     <tr>
                         <td>2018</td>
                         <td>2.76</td>
                         <td>1,236</td>
-                        <td>3,406</td>
-                        <td class="trend-up">+0.5%</td>
+                        <td>3,410</td>
+                        <td class="trend-up">+0.6%</td>
                     </tr>
                     <tr>
                         <td>2019</td>
                         <td>2.87</td>
                         <td>1,185</td>
-                        <td>3,401</td>
+                        <td>3,402</td>
                         <td class="trend-up">+4.1%</td>
                     </tr>
                     <tr>
                         <td>2020</td>
-                        <td>3.03</td>
+                        <td>3.04</td>
                         <td>1,713</td>
-                        <td>5,196</td>
-                        <td class="trend-up">+5.7%</td>
+                        <td>5,201</td>
+                        <td class="trend-up">+5.8%</td>
                     </tr>
                     <tr>
                         <td>2021</td>
-                        <td>3.06</td>
+                        <td>3.07</td>
                         <td>1,311</td>
-                        <td>4,010</td>
-                        <td class="trend-up">+0.9%</td>
+                        <td>4,024</td>
+                        <td class="trend-up">+1.1%</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>3.11</td>
+                        <td>1,191</td>
+                        <td>3,701</td>
+                        <td class="trend-up">+1.2%</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>3.13</td>
+                        <td>1,197</td>
+                        <td>3,743</td>
+                        <td class="trend-up">+0.6%</td>
+                    </tr>
+                    <tr>
+                        <td>2024</td>
+                        <td>3.21</td>
+                        <td>1,308</td>
+                        <td>4,199</td>
+                        <td class="trend-up">+2.7%</td>
+                    </tr>
+                    <tr>
+                        <td>2025</td>
+                        <td>3.22</td>
+                        <td>1,227</td>
+                        <td>3,948</td>
+                        <td class="trend-up">+0.2%</td>
                     </tr>
                 </tbody>
             </table>
@@ -352,18 +450,17 @@
             <h2 class="section-title">About This Data</h2>
             <p>
                 This analysis examines authorship patterns in NBER (National Bureau of Economic Research) working papers
-                from 2015 to 2021. The data shows a clear trend toward increased collaboration in economics research,
-                with the average number of authors per paper rising from 2.67 in 2015 to 3.06 in 2021.
+                from 2005 to 2025. The data shows a clear and consistent trend toward increased collaboration in economics research,
+                with the average number of authors per paper rising from 2.13 in 2005 to 3.22 in 2025.
             </p>
             <p>
                 Notable observations include the significant jump in 2020, which saw both more papers published
-                (1,713 vs. typical ~1,200) and higher collaboration rates. This may reflect increased research
+                (1,713 vs. typical ~1,100-1,200) and higher collaboration rates. This likely reflects increased research
                 activity related to the COVID-19 pandemic, which often required interdisciplinary collaboration.
+                The upward trend has continued post-pandemic, with average coauthorship now exceeding 3.2 authors per paper.
             </p>
             <p>
-                <strong>Data source:</strong> Paper metadata from the
-                <a href="https://github.com/bldavies/nberwp" target="_blank">nberwp R package</a>,
-                which compiles and cleans official NBER metadata. The underlying data is published by the
+                <strong>Data source:</strong> Official NBER working paper metadata from the
                 <a href="https://www.nber.org/research/data/nber-working-papers-and-chapters-metadata" target="_blank">National Bureau of Economic Research</a>.
             </p>
         </div>
@@ -378,13 +475,27 @@
 
     <script>
         const data = {
-            "2015": { "average_coauthors": 2.67, "paper_count": 1020, "total_authors": 2723 },
-            "2016": { "average_coauthors": 2.61, "paper_count": 1175, "total_authors": 3067 },
-            "2017": { "average_coauthors": 2.741, "paper_count": 1164, "total_authors": 3191 },
-            "2018": { "average_coauthors": 2.756, "paper_count": 1236, "total_authors": 3406 },
-            "2019": { "average_coauthors": 2.87, "paper_count": 1185, "total_authors": 3401 },
-            "2020": { "average_coauthors": 3.033, "paper_count": 1713, "total_authors": 5196 },
-            "2021": { "average_coauthors": 3.059, "paper_count": 1311, "total_authors": 4010 }
+            "2005": { "average_coauthors": 2.135, "paper_count": 891, "total_authors": 1902 },
+            "2006": { "average_coauthors": 2.163, "paper_count": 904, "total_authors": 1955 },
+            "2007": { "average_coauthors": 2.23, "paper_count": 904, "total_authors": 2016 },
+            "2008": { "average_coauthors": 2.292, "paper_count": 912, "total_authors": 2090 },
+            "2009": { "average_coauthors": 2.334, "paper_count": 1000, "total_authors": 2334 },
+            "2010": { "average_coauthors": 2.345, "paper_count": 1025, "total_authors": 2404 },
+            "2011": { "average_coauthors": 2.437, "paper_count": 1065, "total_authors": 2595 },
+            "2012": { "average_coauthors": 2.478, "paper_count": 945, "total_authors": 2342 },
+            "2013": { "average_coauthors": 2.504, "paper_count": 1110, "total_authors": 2779 },
+            "2014": { "average_coauthors": 2.528, "paper_count": 1045, "total_authors": 2642 },
+            "2015": { "average_coauthors": 2.672, "paper_count": 1020, "total_authors": 2725 },
+            "2016": { "average_coauthors": 2.614, "paper_count": 1175, "total_authors": 3071 },
+            "2017": { "average_coauthors": 2.743, "paper_count": 1164, "total_authors": 3193 },
+            "2018": { "average_coauthors": 2.759, "paper_count": 1236, "total_authors": 3410 },
+            "2019": { "average_coauthors": 2.871, "paper_count": 1185, "total_authors": 3402 },
+            "2020": { "average_coauthors": 3.036, "paper_count": 1713, "total_authors": 5201 },
+            "2021": { "average_coauthors": 3.069, "paper_count": 1311, "total_authors": 4024 },
+            "2022": { "average_coauthors": 3.107, "paper_count": 1191, "total_authors": 3701 },
+            "2023": { "average_coauthors": 3.127, "paper_count": 1197, "total_authors": 3743 },
+            "2024": { "average_coauthors": 3.21, "paper_count": 1308, "total_authors": 4199 },
+            "2025": { "average_coauthors": 3.218, "paper_count": 1227, "total_authors": 3948 }
         };
 
         const years = Object.keys(data);
@@ -392,7 +503,7 @@
 
         const ctx = document.getElementById('coauthorChart').getContext('2d');
 
-        const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'rgba(37, 99, 235, 0.3)');
         gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
 
@@ -408,11 +519,11 @@
                     borderWidth: 3,
                     fill: true,
                     tension: 0.3,
-                    pointRadius: 6,
+                    pointRadius: 5,
                     pointBackgroundColor: '#2563eb',
                     pointBorderColor: '#ffffff',
                     pointBorderWidth: 2,
-                    pointHoverRadius: 8,
+                    pointHoverRadius: 7,
                     pointHoverBackgroundColor: '#2563eb',
                     pointHoverBorderColor: '#ffffff',
                     pointHoverBorderWidth: 3
@@ -460,15 +571,17 @@
                         },
                         ticks: {
                             font: {
-                                size: 13,
+                                size: 12,
                                 weight: '500'
                             },
-                            color: '#6b7280'
+                            color: '#6b7280',
+                            maxRotation: 45,
+                            minRotation: 45
                         }
                     },
                     y: {
-                        min: 2.4,
-                        max: 3.2,
+                        min: 2.0,
+                        max: 3.4,
                         grid: {
                             color: '#e5e7eb'
                         },

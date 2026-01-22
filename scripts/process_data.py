@@ -1,78 +1,55 @@
 #!/usr/bin/env python3
 """
 Process NBER working paper data to calculate average coauthors per year.
+Uses official NBER metadata in Stata (.dta) format.
 """
 
-import csv
 import json
-from collections import defaultdict
 from pathlib import Path
 
-
-def load_papers(filepath):
-    """Load papers.csv and return dict of paper_id -> year."""
-    papers = {}
-    with open(filepath, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            paper_id = row['paper']
-            # Only include working papers (w prefix), not historical (h prefix)
-            if paper_id.startswith('w'):
-                papers[paper_id] = int(row['year'])
-    return papers
-
-
-def load_paper_authors(filepath):
-    """Load paper_authors.csv and return dict of paper_id -> list of authors."""
-    paper_authors = defaultdict(list)
-    with open(filepath, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            paper_id = row['paper']
-            author_id = row['author']
-            paper_authors[paper_id].append(author_id)
-    return paper_authors
-
-
-def calculate_coauthors_by_year(papers, paper_authors, start_year=2015):
-    """Calculate average number of coauthors per paper by year."""
-    yearly_stats = defaultdict(lambda: {'total_authors': 0, 'paper_count': 0})
-
-    for paper_id, year in papers.items():
-        if year >= start_year:
-            num_authors = len(paper_authors.get(paper_id, []))
-            if num_authors > 0:  # Only count papers with author data
-                yearly_stats[year]['total_authors'] += num_authors
-                yearly_stats[year]['paper_count'] += 1
-
-    # Calculate averages
-    results = {}
-    for year in sorted(yearly_stats.keys()):
-        stats = yearly_stats[year]
-        if stats['paper_count'] > 0:
-            avg = stats['total_authors'] / stats['paper_count']
-            results[year] = {
-                'average_coauthors': round(avg, 3),
-                'paper_count': stats['paper_count'],
-                'total_authors': stats['total_authors']
-            }
-
-    return results
+import pandas as pd
 
 
 def main():
     data_dir = Path(__file__).parent.parent / 'data'
 
-    print("Loading historical data...")
-    papers = load_papers(data_dir / 'papers.csv')
-    paper_authors = load_paper_authors(data_dir / 'paper_authors.csv')
+    print("Loading NBER data...")
 
-    print(f"Loaded {len(papers)} working papers")
-    print(f"Loaded {sum(len(v) for v in paper_authors.values())} author links")
+    # Load author data (paper -> author name, multiple rows per paper)
+    auths = pd.read_stata(data_dir / 'auths.dta')
+    print(f"Loaded {len(auths):,} author records")
 
-    # Calculate stats for 2015 onwards
-    print("\nCalculating average coauthors by year (2015+)...")
-    results = calculate_coauthors_by_year(papers, paper_authors, start_year=2015)
+    # Load date data (paper -> issue_date)
+    dates = pd.read_stata(data_dir / 'date.dta')
+    dates['year'] = pd.to_datetime(dates['issue_date']).dt.year
+    print(f"Loaded {len(dates):,} papers")
+
+    # Count authors per paper
+    author_counts = auths.groupby('paper').size().reset_index(name='num_authors')
+
+    # Merge with dates
+    merged = dates.merge(author_counts, on='paper', how='left')
+
+    # Filter to 2005 onwards and exclude papers with no authors
+    start_year = 2005
+    merged = merged[(merged['year'] >= start_year) & (merged['num_authors'].notna())]
+
+    # Calculate stats by year
+    stats = merged.groupby('year').agg(
+        paper_count=('paper', 'count'),
+        total_authors=('num_authors', 'sum'),
+        average_coauthors=('num_authors', 'mean')
+    ).reset_index()
+
+    # Convert to dict format
+    results = {}
+    for _, row in stats.iterrows():
+        year = int(row['year'])
+        results[year] = {
+            'average_coauthors': round(row['average_coauthors'], 3),
+            'paper_count': int(row['paper_count']),
+            'total_authors': int(row['total_authors'])
+        }
 
     # Save results
     output_file = data_dir / 'coauthor_stats.json'
@@ -80,10 +57,16 @@ def main():
         json.dump(results, f, indent=2)
 
     print(f"\nResults saved to {output_file}")
-    print("\nAverage coauthors per paper by year:")
-    print("-" * 50)
-    for year, stats in results.items():
-        print(f"{year}: {stats['average_coauthors']:.2f} authors/paper ({stats['paper_count']} papers)")
+    print(f"\nAverage coauthors per paper by year ({start_year}-{max(results.keys())}):")
+    print("-" * 55)
+    for year in sorted(results.keys()):
+        s = results[year]
+        print(f"{year}: {s['average_coauthors']:.2f} authors/paper ({s['paper_count']:,} papers)")
+
+    total_papers = sum(r['paper_count'] for r in results.values())
+    total_authors = sum(r['total_authors'] for r in results.values())
+    print(f"\nTotal papers analyzed: {total_papers:,}")
+    print(f"Total author appearances: {total_authors:,}")
 
 
 if __name__ == '__main__':
